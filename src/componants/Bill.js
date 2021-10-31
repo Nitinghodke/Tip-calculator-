@@ -1,27 +1,42 @@
 import React, { useState } from "react";
-// import Custumer from './Custumer';
 
 function Bill() {
+  //set state as empty array
   const [state, setState] = useState([]);
+
+  //set person count 0
   const [person, setperson] = useState(0);
+
+  // set initinal value as 0
   const [totaltip, settotaltip] = useState(0);
+
+  // get initinal value of input in bill state...
   const [bill, setbill] = useState({
     billamount: "",
     tip: "",
     customer: "",
     person: "",
   });
+
+  // set input value though chenge event function...
   const ChangeEvent = (e) => {
     setbill({ ...bill, [e.target.name]: e.target.value });
   };
 
+  //cal function use for calculation
   const cal = (e) => {
     e.preventDefault();
+
+    //calculate persentage from bill amount
     bill.totalbill = (bill.tip / 100) * bill.billamount;
     console.log(bill.totalbill);
+
+    // count total person
     bill.totalperson = person + parseInt(bill.person);
-    setperson(bill.totalperson);
-    settotaltip(totaltip + parseInt(bill.totalbill))
+        setperson(bill.totalperson);
+    settotaltip(totaltip + parseInt(bill.totalbill));
+
+    // convert bill object in array..
     setState([...state, bill]);
     console.log(state);
   };
@@ -31,8 +46,9 @@ function Bill() {
       <h1>
         <b>TIP CALCULATOR</b>
       </h1>
+
       <h4>Build React </h4>
-      <div className="form-group">
+       <div className="form-group">
         <label htmlFor="billamount" className="form-label">
           Enter Your Bill Amount
         </label>
@@ -56,7 +72,6 @@ function Bill() {
           name="person"
           placeholder="Enter total Person"
           onChange={ChangeEvent}
-          
         />
       </div>
       <div className="form-group">
@@ -102,35 +117,33 @@ function Bill() {
           </tr>
         </thead>
         <tbody>
-          {state.map((item, id) => (
+          {state.map((data, id) => (
             <tr key={id}>
               <td>
-                {item.customer} offering a tip of {item.totalbill} rupees
+                {data.customer} offering a tip of {data.totalbill} rupees
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-          <h4 className="text-center p-2 my-2 bg-success">Calculate Tip And Customer</h4>     
+      <h4 className="text-center p-2 my-2 bg-success">
+        Calculate Tip And Customer
+      </h4>
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Total customer</th>
-            <th scope="col">Tip</th>
+            <th >Total customer</th>
+            <th >Tip</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{person}</td>
-            
+
             <td>{totaltip}</td>
           </tr>
-          
-            
         </tbody>
       </table>
-         
-      
     </>
   );
 }
